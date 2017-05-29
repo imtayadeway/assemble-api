@@ -11,7 +11,11 @@ class TeamsController < ApplicationController
 
   # GET /teams/1
   def show
-    render json: @team
+    if @team.users.include?(current_user)
+      render json: @team
+    else
+      head :forbidden
+    end
   end
 
   # POST /teams

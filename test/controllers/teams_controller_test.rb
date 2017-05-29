@@ -43,6 +43,12 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not show team if user is not on that team" do
+    get team_url(teams(:two)), as: :json
+
+    assert_response :forbidden
+  end
+
   test "should update team" do
     patch team_url(@team), params: { data: { attributes: { "team-name" => "New Team Name" } } }, as: :json
 
