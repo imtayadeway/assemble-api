@@ -35,8 +35,11 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test "should show team" do
+  test "should show team if user is on that team" do
     get team_url(@team), as: :json
+
+    assert_equal(@team.id.to_s, response.parsed_body["data"]["id"])
+    assert_equal("Team The First", response.parsed_body["data"]["attributes"]["team-name"])
     assert_response :success
   end
 
